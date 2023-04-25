@@ -13,6 +13,9 @@ namespace SAPI5Speaker
         {
             SpeechSynthesizer TTS = new SpeechSynthesizer();
 
+            Console.InputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
+
             if (args.Length <= 2)
             {
                 if (args.Length == 1 && args[0] == "list")
