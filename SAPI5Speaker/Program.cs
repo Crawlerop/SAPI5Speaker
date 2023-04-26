@@ -61,7 +61,7 @@ namespace SAPI5Speaker
             }
             else
             {
-                Console.WriteLine(args[0]);
+                //Console.WriteLine(args[0]);
                 TTS.SelectVoice(args[0]);
                 if (args[1] == "-")
                 {
