@@ -37,6 +37,20 @@ namespace SAPI5Speaker
                             Console.WriteLine(String.Format("    {0}: {1}", key, voice.VoiceInfo.AdditionalInfo[key]));
                         }                        
                     }
+                } else if (args.Length == 1 && args[0] == "test")
+                {
+                    foreach (InstalledVoice voice in TTS.GetInstalledVoices())
+                    {                        
+                        try
+                        {
+                            TTS.SelectVoice(voice.VoiceInfo.Name);
+                            Console.WriteLine("{0}: OK", voice.VoiceInfo.Name);
+                        } catch (Exception e)
+                        {
+                            Console.WriteLine(e.ToString());
+                            Console.WriteLine("{0}: NOK", voice.VoiceInfo.Name);
+                        }
+                    }
                 }
                 else
                 {
@@ -47,6 +61,7 @@ namespace SAPI5Speaker
             }
             else
             {
+                Console.WriteLine(args[0]);
                 TTS.SelectVoice(args[0]);
                 if (args[1] == "-")
                 {
