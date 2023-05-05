@@ -13,6 +13,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		SpeechLib|Any CPU = SpeechLib|Any CPU
+		SpeechLib|x64 = SpeechLib|x64
+		SpeechLib|x86 = SpeechLib|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6D925A02-3F2C-4A4E-BB3D-AE7B0896B936}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -27,6 +30,12 @@ Global
 		{6D925A02-3F2C-4A4E-BB3D-AE7B0896B936}.Release|x64.Build.0 = Release|x64
 		{6D925A02-3F2C-4A4E-BB3D-AE7B0896B936}.Release|x86.ActiveCfg = Release|x86
 		{6D925A02-3F2C-4A4E-BB3D-AE7B0896B936}.Release|x86.Build.0 = Release|x86
+		{6D925A02-3F2C-4A4E-BB3D-AE7B0896B936}.SpeechLib|Any CPU.ActiveCfg = Release|Any CPU
+		{6D925A02-3F2C-4A4E-BB3D-AE7B0896B936}.SpeechLib|Any CPU.Build.0 = Release|Any CPU
+		{6D925A02-3F2C-4A4E-BB3D-AE7B0896B936}.SpeechLib|x64.ActiveCfg = Release|x64
+		{6D925A02-3F2C-4A4E-BB3D-AE7B0896B936}.SpeechLib|x64.Build.0 = Release|x64
+		{6D925A02-3F2C-4A4E-BB3D-AE7B0896B936}.SpeechLib|x86.ActiveCfg = SpeechLib|x86
+		{6D925A02-3F2C-4A4E-BB3D-AE7B0896B936}.SpeechLib|x86.Build.0 = SpeechLib|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
