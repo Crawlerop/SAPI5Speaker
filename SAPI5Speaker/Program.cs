@@ -133,7 +133,7 @@ namespace SAPI5Speaker
                         using (MemoryStream buffer = new MemoryStream())
                         {
 #if USE_SPEECHLIB
-                            TTS.AudioOutputStream = (SpMemoryStream)buffer;
+                            TTS.AudioOutputStream = (ISpeechMemoryStream)buffer;
 #else
                             TTS.SetOutputToWaveStream(buffer);
 #endif
