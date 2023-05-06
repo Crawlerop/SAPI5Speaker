@@ -182,10 +182,11 @@ namespace SAPI5Speaker
                             String type = Console.ReadLine();
                             if (type == "s")
                             {
+                                String SSML = String.Format("<speak version=\"1.0\" xml:lang=\"en-US\"><voice name=\"{0}\">{1}</voice></speak>", args[0], Console.ReadLine());
 #if USE_SPEECHLIB
-                                TTS.Speak(String.Format("<speak version=\"1.0\">{0}</speak>", Console.ReadLine()), SpeechVoiceSpeakFlags.SVSFParseSsml);
+                                TTS.Speak(SSML, SpeechVoiceSpeakFlags.SVSFParseSsml);
 #else
-                                TTS.SpeakSsml(String.Format("<speak version=\"1.0\">{0}</speak>", Console.ReadLine()));
+                                TTS.SpeakSsml(SSML);
 #endif
                             }
                             else if (type == "t")
@@ -285,10 +286,11 @@ namespace SAPI5Speaker
                     String type = Console.ReadLine();
                     if (type == "s")
                     {
+                        String SSML = String.Format("<speak version=\"1.0\" xml:lang=\"en-US\"><voice name=\"{0}\">{1}</voice></speak>", args[0], Console.ReadLine());
 #if USE_SPEECHLIB
-                        TTS.Speak(String.Format("<speak version=\"1.0\">{0}</speak>", Console.ReadLine()), SpeechVoiceSpeakFlags.SVSFParseSsml);
+                        TTS.Speak(SSML, SpeechVoiceSpeakFlags.SVSFParseSsml);
 #else
-                        TTS.SpeakSsml(String.Format("<speak version=\"1.0\">{0}</speak>", Console.ReadLine()));
+                        TTS.SpeakSsml(SSML);
 #endif
                     }
                     else if (type == "t")
