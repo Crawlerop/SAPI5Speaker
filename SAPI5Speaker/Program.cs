@@ -140,6 +140,32 @@ namespace SAPI5Speaker
 #if USE_SPEECHLIB
                             SpMemoryStream buffer = new SpMemoryStream();                            
                             TTS.AudioOutputStream = buffer;
+
+                            String format = Console.ReadLine();
+                            switch (format)
+                            {
+                                case "8":
+                                    buffer.Format.Type = SpeechAudioFormatType.SAFT8kHz16BitMono;
+                                    break;
+                                case "11":
+                                    buffer.Format.Type = SpeechAudioFormatType.SAFT11kHz16BitMono;
+                                    break;
+                                case "16":
+                                    buffer.Format.Type = SpeechAudioFormatType.SAFT16kHz16BitMono;
+                                    break;
+                                case "22":
+                                    buffer.Format.Type = SpeechAudioFormatType.SAFT22kHz16BitMono;
+                                    break;
+                                case "32":
+                                    buffer.Format.Type = SpeechAudioFormatType.SAFT32kHz16BitMono;
+                                    break;
+                                case "44":
+                                    buffer.Format.Type = SpeechAudioFormatType.SAFT44kHz16BitMono;
+                                    break;
+                                case "48":
+                                    buffer.Format.Type = SpeechAudioFormatType.SAFT48kHz16BitMono;
+                                    break;
+                            }
 #else
                             TTS.SetOutputToWaveStream(buffer);
 #endif
@@ -216,6 +242,32 @@ namespace SAPI5Speaker
                     SpFileStream outFile = new SpFileStream();
                     outFile.Open(args[1], SpeechStreamFileMode.SSFMCreateForWrite, false);
                     TTS.AudioOutputStream = outFile;
+
+                    String format = Console.ReadLine();
+                    switch (format)
+                    {
+                        case "8":
+                            outFile.Format.Type = SpeechAudioFormatType.SAFT8kHz16BitMono;
+                            break;
+                        case "11":
+                            outFile.Format.Type = SpeechAudioFormatType.SAFT11kHz16BitMono;
+                            break;
+                        case "16":
+                            outFile.Format.Type = SpeechAudioFormatType.SAFT16kHz16BitMono;
+                            break;
+                        case "22":
+                            outFile.Format.Type = SpeechAudioFormatType.SAFT22kHz16BitMono;
+                            break;                        
+                        case "32":
+                            outFile.Format.Type = SpeechAudioFormatType.SAFT32kHz16BitMono;
+                            break;
+                        case "44":
+                            outFile.Format.Type = SpeechAudioFormatType.SAFT44kHz16BitMono;
+                            break;
+                        case "48":
+                            outFile.Format.Type = SpeechAudioFormatType.SAFT48kHz16BitMono;
+                            break;                        
+                    }
 #else
                     TTS.SetOutputToWaveFile(args[1]);
 #endif
