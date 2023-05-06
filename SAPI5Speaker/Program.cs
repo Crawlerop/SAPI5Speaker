@@ -5,6 +5,7 @@ using System.Speech.Synthesis;
 #endif
 using System.IO;
 using System.Reflection;
+using System.Speech.AudioFormat;
 #if USE_SPEECHLIB
 using SpeechLib;
 using System.Linq;
@@ -65,13 +66,14 @@ namespace SAPI5Speaker
 #else
                     foreach (InstalledVoice voice in TTS.GetInstalledVoices())
                     {
-                        if (!voice.Enabled) continue;
+                        //if (!voice.Enabled) continue;
                         Console.WriteLine(voice.VoiceInfo.Name);
                         Console.WriteLine("  Description: "+voice.VoiceInfo.Description);                        
                         Console.WriteLine("  Age: " + voice.VoiceInfo.Age);
                         Console.WriteLine("  Culture: " + voice.VoiceInfo.Culture);
                         Console.WriteLine("  Gender: " + voice.VoiceInfo.Gender);
                         Console.WriteLine("  ID: " + voice.VoiceInfo.Id);
+                        Console.WriteLine("  Enabled: " + voice.Enabled);
 
                         Console.WriteLine("  AdditionalInfo: ");
                         
@@ -79,7 +81,15 @@ namespace SAPI5Speaker
                         {
                             if (key.Length <= 0) continue;
                             Console.WriteLine(String.Format("    {0}: {1}", key, voice.VoiceInfo.AdditionalInfo[key]));
-                        }                        
+                        }
+
+                        //Console.Error.WriteLine("AFMT: {0}", voice.VoiceInfo.SupportedAudioFormats.Count);
+                        Console.WriteLine("  AudioFormats: ");
+
+                        foreach (SpeechAudioFormatInfo format in voice.VoiceInfo.SupportedAudioFormats)
+                        {                            
+                            Console.WriteLine(String.Format("    {0} {1}-bits {2}ch", format.SamplesPerSecond, format.BitsPerSample, format.ChannelCount));
+                        }
                     }
 #endif
 #if FALSE
