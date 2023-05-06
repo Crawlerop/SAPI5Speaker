@@ -20,6 +20,7 @@ namespace SAPI5Speaker
         {
             #if USE_SPEECHLIB
             SpVoice TTS = new SpVoice();
+            TTS.AllowAudioOutputFormatChangesOnNextSet = true;
             #else
             SpeechSynthesizer TTS = new SpeechSynthesizer();
             #endif
@@ -64,6 +65,7 @@ namespace SAPI5Speaker
 #else
                     foreach (InstalledVoice voice in TTS.GetInstalledVoices())
                     {
+                        if (!voice.Enabled) continue;
                         Console.WriteLine(voice.VoiceInfo.Name);
                         Console.WriteLine("  Description: "+voice.VoiceInfo.Description);                        
                         Console.WriteLine("  Age: " + voice.VoiceInfo.Age);
@@ -80,7 +82,7 @@ namespace SAPI5Speaker
                         }                        
                     }
 #endif
-#if !USE_SPEECHLIB
+#if 0
                 }
                 else if (args.Length == 1 && args[0] == "test")
                 {                    
