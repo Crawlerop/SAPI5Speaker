@@ -9,6 +9,7 @@ using System.Reflection;
 using SpeechLib;
 using System.Linq;
 using System.Globalization;
+using System.Runtime.InteropServices.ComTypes;
 #endif
 
 namespace SAPI5Speaker
@@ -130,10 +131,13 @@ namespace SAPI5Speaker
                 {
                     using (Stream stdout = Console.OpenStandardOutput())
                     {
+#if !USE_SPEECHLIB                       
                         using (MemoryStream buffer = new MemoryStream())
+#endif
                         {
 #if USE_SPEECHLIB
-                            TTS.AudioOutputStream = (ISpeechMemoryStream)buffer;
+                            SpMemoryStream buffer = new SpMemoryStream();                            
+                            TTS.AudioOutputStream = buffer;
 #else
                             TTS.SetOutputToWaveStream(buffer);
 #endif
@@ -154,10 +158,43 @@ namespace SAPI5Speaker
                                 Console.Error.WriteLine("Invalid type {0}", type);
                                 Console.Error.WriteLine("Valid types include: t (text), s (SSML)");
                                 Environment.Exit(1);
-                            }                        
+                            }
 
+#if USE_SPEECHLIB
+                            buffer.Seek(0);
+#else
                             buffer.Position = 0;
+#endif
 
+#if USE_SPEECHLIB
+                            object temp = new object();
+                            int count;
+                            SpWaveFormatEx waveFmt = buffer.Format.GetWaveFormatEx();
+
+                            //Console.Error.WriteLine(waveFmt.);
+                            stdout.Write(Encoding.ASCII.GetBytes("RIFF"), 0, 4);
+                            stdout.Write(BitConverter.GetBytes(((byte[])buffer.GetData()).Length + 0x24), 0, 4);
+                            stdout.Write(Encoding.ASCII.GetBytes("WAVE"), 0, 4);
+
+                            stdout.Write(Encoding.ASCII.GetBytes("fmt "), 0, 4);                            
+                            stdout.Write(BitConverter.GetBytes(16), 0, 4);                            
+                            stdout.Write(BitConverter.GetBytes(waveFmt.FormatTag), 0, 2);                            
+                            stdout.Write(BitConverter.GetBytes(waveFmt.Channels), 0, 2);                            
+                            stdout.Write(BitConverter.GetBytes(waveFmt.SamplesPerSec), 0, 4);
+                            stdout.Write(BitConverter.GetBytes(waveFmt.AvgBytesPerSec), 0, 4);                            
+                            stdout.Write(BitConverter.GetBytes(waveFmt.BlockAlign), 0, 2);                            
+                            stdout.Write(BitConverter.GetBytes(waveFmt.BitsPerSample), 0, 2);
+
+                            stdout.Write(Encoding.ASCII.GetBytes("data"), 0, 4);
+                            stdout.Write(BitConverter.GetBytes(((byte[])buffer.GetData()).Length), 0, 4);
+
+                            while ((count = buffer.Read(out temp, 8192)) > 0)
+                            {
+                                stdout.Write((byte[])temp, 0, count);
+                            }
+
+                            stdout.Flush();
+#else
                             byte[] temp = new byte[8192];
                             int count;
 
@@ -165,13 +202,17 @@ namespace SAPI5Speaker
                             {
                                 stdout.Write(temp, 0, count);
                             }
+
+                            stdout.Flush();
+#endif
                         }
                     }
                 }
                 else
                 {
 #if USE_SPEECHLIB
-                    ISpeechFileStream outFile = (ISpeechFileStream)File.OpenWrite(args[1]);                    
+                    SpFileStream outFile = new SpFileStream();
+                    outFile.Open(args[1], SpeechStreamFileMode.SSFMCreateForWrite, false);
                     TTS.AudioOutputStream = outFile;
 #else
                     TTS.SetOutputToWaveFile(args[1]);
