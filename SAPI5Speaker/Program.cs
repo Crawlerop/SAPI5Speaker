@@ -82,7 +82,7 @@ namespace SAPI5Speaker
                         }                        
                     }
 #endif
-#if 0
+#if FALSE
                 }
                 else if (args.Length == 1 && args[0] == "test")
                 {                    
