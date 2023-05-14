@@ -148,8 +148,7 @@ namespace SAPI5Speaker
 #endif
                         {
 #if USE_SPEECHLIB
-                            SpMemoryStream buffer = new SpMemoryStream();                            
-                            TTS.AudioOutputStream = buffer;
+                            SpMemoryStream buffer = new SpMemoryStream();                                                        
 
                             String format = Console.ReadLine();
                             switch (format)
@@ -176,6 +175,8 @@ namespace SAPI5Speaker
                                     buffer.Format.Type = SpeechAudioFormatType.SAFT48kHz16BitMono;
                                     break;
                             }
+
+                            TTS.AudioOutputStream = buffer;
 #else
                             TTS.SetOutputToWaveStream(buffer);
 #endif
@@ -250,14 +251,12 @@ namespace SAPI5Speaker
                 else
                 {
 #if USE_SPEECHLIB
-                    SpFileStream outFile = new SpFileStream();
-                    outFile.Open(args[1], SpeechStreamFileMode.SSFMCreateForWrite, false);
-                    TTS.AudioOutputStream = outFile;
+                    SpFileStream outFile = new SpFileStream();                    
 
                     String format = Console.ReadLine();
                     switch (format)
                     {
-                        case "8":
+                        case "8":                            
                             outFile.Format.Type = SpeechAudioFormatType.SAFT8kHz16BitMono;
                             break;
                         case "11":
@@ -279,6 +278,9 @@ namespace SAPI5Speaker
                             outFile.Format.Type = SpeechAudioFormatType.SAFT48kHz16BitMono;
                             break;                        
                     }
+
+                    outFile.Open(args[1], SpeechStreamFileMode.SSFMCreateForWrite, false);
+                    TTS.AudioOutputStream = outFile;
 #else
                     TTS.SetOutputToWaveFile(args[1]);
 #endif
