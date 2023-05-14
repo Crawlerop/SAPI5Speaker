@@ -21,7 +21,7 @@ namespace SAPI5Speaker
         {
             #if USE_SPEECHLIB
             SpVoice TTS = new SpVoice();
-            TTS.AllowAudioOutputFormatChangesOnNextSet = true;
+            //TTS.AllowAudioOutputFormatChangesOnNextSet = true;
             #else
             SpeechSynthesizer TTS = new SpeechSynthesizer();
             #endif
